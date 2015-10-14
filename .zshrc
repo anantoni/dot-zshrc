@@ -640,8 +640,11 @@ HISTFILESIZE=2000
 
     if [ -d "/home/anantoni/lb-engines/logicblox-3.10.24" ] ; then
         source /home/anantoni/lb-engines/logicblox-3.10.24/etc/profile.d/logicblox.sh
+        export LOGICBLOX_HOME=/home/anantoni/lb-engines/logicblox-3.10.24/logicblox
     fi
-    
+
+    export LB_NO_MEM_WARN=1
+    export LB_PAGER_FORCE_START=1
     alias home='cd ${HOME}'
     alias doop_home="cd ${HOME}/doop-nexgen"
 
@@ -655,6 +658,10 @@ HISTFILESIZE=2000
     PATH=${PATH}:${GRADLE_HOME}/bin/
     export JAVA_HOME
     #export JRE_HOME
+    export LLVM=/opt/llvm
+
+    PATH=${LLVM}/bin:${PATH}
+    PATH=${LOGICBLOX_HOME}/bin:${PATH}
     export PATH
 
     # some more ls aliases
