@@ -131,24 +131,12 @@ HISTFILESIZE=2000
 
    #{{{ Aliases
 
-   #{{{ Amarok
-   if [[ -x =amarok ]]; then
-       alias play='dcop amarok player play'
-       alias pause='dcop amarok player pause'
-       alias next='dcop amarok player next'
-       alias prev='dcop amarok player prev'
-       alias stop='dcop amarok player stop'
-       alias current='dcop amarok player nowPlaying'
-       alias osd='dcop amarok player showOSD'
-       alias pp='dcop amarok player playPause'
-   fi
-
    #}}}
 
    #{{{ Shell Conveniences
 
    alias sz='source ~/.zshrc'
-   alias ez='vim ~/.zshrc'
+   alias ez='emacs ~/.zshrc'
    alias mk=popd
    alias ls='pwd; ls --color'
 
@@ -165,8 +153,8 @@ HISTFILESIZE=2000
            alias esy='sudo emerge --sync'
            alias ei='sudo emerge'
            alias eip='sudo emerge -vp '
-           alias packmask='sudo vi /etc/portage/package.unmask'
-           alias packuse='sudo vi /etc/portage/package.use'
+           alias packmask='sudo emacsclient /etc/portage/package.unmask'
+           alias packuse='sudo emacsclient /etc/portage/package.use'
            alias packkey='sudo vi /etc/portage/package.keywords'
        fi
    fi
@@ -628,40 +616,44 @@ HISTFILESIZE=2000
 
     export TERM=xterm-256color
 
-    # LB - DOOP related environment
+    # LB -  related environment
     export LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
     if [ -d "/home/anantoni/doop-nexgen" ] ; then
-        export DOOP_HOME=/home/anantoni/doop-nexgen/
+        export DOOP_HOME=/home/anantoni/Work/doop-nexgen/
     fi
     export DOOP_PROJECT=doop-nexgen
-    if [ -d "/home/anantoni/doop-nexgen/doop-benchmarks/JREs" ] ; then
-        export DOOP_EXTERNALS=/home/anantoni/doop-nexgen/doop-benchmarks/JREs/
+    if [ -d "/home/anantoni/doop-benchmarks/JREs" ] ; then
+        export DOOP_EXTERNALS=/home/anantoni/Work/doop-benchmarks/JREs/
     fi
 
-    if [ -d "/home/anantoni/lb-engines/logicblox-3.10.24" ] ; then
-        source /home/anantoni/lb-engines/logicblox-3.10.24/etc/profile.d/logicblox.sh
-        export LOGICBLOX_HOME=/home/anantoni/lb-engines/logicblox-3.10.24/logicblox
+    if [ -d "/opt/logicblox" ] ; then
+        source /opt/logicblox/etc/profile.d/logicblox.sh
+        export LOGICBLOX_HOME=/opt/logicblox/logicblox
+        PATH=${LOGICBLOX_HOME}/bin:${PATH}
     fi
 
     export LB_NO_MEM_WARN=1
     export LB_PAGER_FORCE_START=1
     alias home='cd ${HOME}'
-    alias doop_home="cd ${HOME}/doop-nexgen"
+    alias doop_home="cd ${HOME}/Work/doop-nexgen"
 
-    #JAVA_HOME=${HOME}/Dropbox/resources/java/jdk1.8.0_20/
     JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
     PATH=${JAVA_HOME}/bin/:${PATH}
-    #GRADLE_HOME=/opt/gradle-2.4
-    #MAVEN_HOME=/opt/apache-maven-3.3.3
-    PATH=${PATH}:${DOOP_HOME}
-    PATH=${PATH}:${MAVEN_HOME}/bin/
-    PATH=${PATH}:${GRADLE_HOME}/bin/
-    export JAVA_HOME
-    #export JRE_HOME
-    export LLVM=/opt/llvm
 
-    PATH=${LLVM}/bin:${PATH}
-    PATH=${LOGICBLOX_HOME}/bin:${PATH}
+    if [-d "/opt/gradle"] ; then
+        export GRADLE_HOME=/opt/gradle
+    fi
+    if [-d "/opt/maven"] ; then
+        export MAVEN_HOME=/opt/maven
+        PATH=${PATH}:${MAVEN_HOME}/bin/
+    fi
+    if [-d "/opt/llvm"] ; then
+        export LLVM=/opt/llvm
+        PATH=${PATH}:${GRADLE_HOME}/bin/
+        PATH=${LLVM}/bin:${PATH}
+    fi
+
+    export JAVA_HOME
     export PATH
 
     # some more ls aliases
@@ -748,7 +740,7 @@ HISTFILESIZE=2000
     alias updatey="sudo apt-get --yes"
 
     # update on one command
-    alias update='sudo apt-get update' 
+    alias update='sudo apt-get update'
     alias upgrade='sudo apt-get update && sudo apt-get upgrade'
 
 
